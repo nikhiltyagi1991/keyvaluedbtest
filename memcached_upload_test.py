@@ -5,7 +5,7 @@ import pdb
 import psutil
 
 input_file = 'data/stop_times.csv'
-output_file = 'outputs/db_loading.csv'
+output_file = 'outputs/memcached_db_loading.csv'
 items_count = 1000
 mc = memcache.Client(['127.0.0.1:11211'], debug=0)
 

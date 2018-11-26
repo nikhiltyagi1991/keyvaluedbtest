@@ -4,11 +4,14 @@ import time
 import pdb
 import psutil
 import redis
+# import urllib.request
 
 input_file = 'data/stop_times.csv'
 output_file = 'outputs/redis_db_loading.csv'
 items_count = 1000
+write_miss = 0
 
+# redis_db = redis.StrictRedis(host="40.85.251.241", port=6379, db=0)
 redis_db = redis.StrictRedis(host="localhost", port=6379, db=0)
 # mc = memcache.Client(['127.0.0.1:11211'], debug=0)
 
@@ -28,7 +31,10 @@ with open(output_file, 'w', newline='') as writefile:
 
         for row in stop_times_reader:
             for column_name in row.keys():
-                redis_db.set("stop_times."+ str(index)+ "." + column_name, row[column_name])
+                try:
+                    redis_db.set("stop_times."+ str(index)+ "." + column_name, row[column_name])
+                except:
+                    write_miss += 1
             
             if index % items_count == 0:
                 delta_time = time.time() - start_timestamp
@@ -41,7 +47,11 @@ with open(output_file, 'w', newline='') as writefile:
                     'memory_usage': psutil.virtual_memory().used/(1024*1024*1024),
                     'memory_free': psutil.virtual_memory().free/(1024*1024*1024)
                 }
+                # urllib.request.urlopen("http://40.85.251.241/").read()
                 report_writer.writerow(output_row)
                 start_timestamp = time.time()
 
             index += 1
+
+print('write misses '+ write_miss)
+print('end time: ', time.time())
