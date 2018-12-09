@@ -25,7 +25,10 @@ with open(output_file, 'w', newline='') as writefile:
 
         for row in stop_times_reader:
             for column_name in row.keys():
-                mc.set("stop_times."+ str(index)+ "." + column_name, row[column_name])
+                storage_key = "stop_times."+ str(index)+ "." + column_name
+                mc.set(storage_key, row[column_name])
+                if index % items_count == 0:
+                    print(storage_key)
             
             if index % items_count == 0:
                 delta_time = time.time() - start_timestamp
@@ -41,6 +44,8 @@ with open(output_file, 'w', newline='') as writefile:
                 report_writer.writerow(output_row)
                 start_timestamp = time.time()
 
+            if limit != None and index > limit:
+                break
             index += 1
         
         print('end time: ', time.time())
