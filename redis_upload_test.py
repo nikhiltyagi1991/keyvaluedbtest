@@ -1,4 +1,3 @@
-import memcache
 import csv
 import time
 import pdb
@@ -13,7 +12,6 @@ write_miss = 0
 
 # redis_db = redis.StrictRedis(host="40.85.251.241", port=6379, db=0)
 redis_db = redis.StrictRedis(host="localhost", port=6379, db=0)
-# mc = memcache.Client(['127.0.0.1:11211'], debug=0)
 
 # key will be stop_times.trip_id.0
 with open(output_file, 'w', newline='') as writefile:
@@ -53,5 +51,5 @@ with open(output_file, 'w', newline='') as writefile:
 
             index += 1
 
-print('write misses '+ write_miss)
+print('write misses ', write_miss)
 print('end time: ', time.time())
