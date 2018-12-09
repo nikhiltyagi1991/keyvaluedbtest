@@ -8,6 +8,7 @@ input_file = 'data/stop_times.csv'
 output_file = 'outputs/memcached_db_loading.csv'
 items_count = 1000
 mc = memcache.Client(['127.0.0.1:11211'], debug=0)
+limit = 50000
 
 # key will be stop_times.trip_id.0
 with open(output_file, 'w', newline='') as writefile:

@@ -63,10 +63,10 @@ class AccessReportGenerator(threading.Thread):
     
     def run_mem(self, columns):
         output_file = 'outputs/memcached_accesstime_' + str(self.record_limit) + '.csv'
-        headers = ['index', 'time_taken']
-        report_writer = csv.DictWriter(writefile, fieldnames=headers)
-        report_writer.writeheader()
         with open(output_file, 'w', newline='') as writefile:
+            headers = ['index', 'time_taken']
+            report_writer = csv.DictWriter(writefile, fieldnames=headers)
+            report_writer.writeheader()
             for i in range(100):
                 start_time = time.time()
                 for j in range(self.record_limit):
@@ -85,10 +85,10 @@ class AccessReportGenerator(threading.Thread):
 
     def run_redis(self, columns):
         output_file = 'outputs/redis_accesstime_' + str(self.record_limit) + '.csv'
-        headers = ['index', 'time_taken']
-        report_writer = csv.DictWriter(writefile, fieldnames=headers)
-        report_writer.writeheader()
         with open(output_file, 'w', newline='') as writefile:
+            headers = ['index', 'time_taken']
+            report_writer = csv.DictWriter(writefile, fieldnames=headers)
+            report_writer.writeheader()
             for i in range(100):
                 start_time = time.time()
                 for j in range(self.record_limit):
