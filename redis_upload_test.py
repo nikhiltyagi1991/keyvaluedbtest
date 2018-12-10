@@ -9,6 +9,7 @@ input_file = 'data/stop_times.csv'
 output_file = 'outputs/redis_db_loading.csv'
 items_count = 1000
 write_miss = 0
+write_limit = 50000
 
 # redis_db = redis.StrictRedis(host="40.85.251.241", port=6379, db=0)
 redis_db = redis.StrictRedis(host="localhost", port=6379, db=0)
@@ -49,6 +50,8 @@ with open(output_file, 'w', newline='') as writefile:
                 report_writer.writerow(output_row)
                 start_timestamp = time.time()
 
+            if write_limit != None and write_limit < index:
+                break
             index += 1
 
 print('write misses ', write_miss)
